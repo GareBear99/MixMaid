@@ -1,0 +1,9 @@
+{
+  "name": "EDM Punch",
+  "strength": 68,
+  "speed": 65,
+  "bassFocus": 70,
+  "stereoAssist": 38,
+  "dynamicAmount": 52,
+  "target": 1
+}

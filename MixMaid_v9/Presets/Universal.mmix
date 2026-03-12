@@ -1,0 +1,9 @@
+{
+  "name": "Universal",
+  "strength": 55,
+  "speed": 45,
+  "bassFocus": 50,
+  "stereoAssist": 35,
+  "dynamicAmount": 45,
+  "target": 0
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Podcast Focus",
+  "strength": 47,
+  "speed": 35,
+  "bassFocus": 18,
+  "stereoAssist": 8,
+  "dynamicAmount": 30,
+  "target": 4
+}
