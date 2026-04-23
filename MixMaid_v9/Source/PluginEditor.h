@@ -46,5 +46,9 @@ private:
     std::unique_ptr<SA> aStrength, aSpeed, aBassFocus, aStereoAssist, aDynamicAmount, aInputTrim, aOutGain, aMix, aReferenceBlend;
     std::unique_ptr<CA> aTarget;
 
+    // Held across the async FileChooser callback so the dialog survives the
+    // buttonClicked() stack frame (JUCE 7+ removed the synchronous variants).
+    std::unique_ptr<juce::FileChooser> fileChooser;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MixMaidAudioProcessorEditor)
 };

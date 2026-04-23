@@ -51,3 +51,8 @@ target_link_libraries(MixMaid PRIVATE
     juce::juce_recommended_config_flags
     juce::juce_recommended_lto_flags
     juce::juce_recommended_warning_flags)
+
+# Auto-added: generate JuceHeader.h for sources that include <JuceHeader.h>
+juce_generate_juce_header(MixMaid)
+
+target_compile_definitions(MixMaid PRIVATE JUCE_VST3_CAN_REPLACE_VST2=0)

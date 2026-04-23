@@ -199,17 +199,30 @@ void MixMaidAudioProcessorEditor::buttonClicked(juce::Button* button)
     {
         auto dir = juce::File::getSpecialLocation(juce::File::userDocumentsDirectory).getChildFile("MixMaid Presets");
         dir.createDirectory();
-        juce::FileChooser chooser("Save MixMaid preset", dir, "*.mmix");
-        if (chooser.browseForFileToSave(true))
-            audioProcessor.saveUserPresetToFile(chooser.getResult());
+        fileChooser = std::make_unique<juce::FileChooser>("Save MixMaid preset", dir, "*.mmix");
+        const auto flags = juce::FileBrowserComponent::saveMode
+                         | juce::FileBrowserComponent::canSelectFiles
+                         | juce::FileBrowserComponent::warnAboutOverwriting;
+        fileChooser->launchAsync(flags, [this](const juce::FileChooser& fc)
+        {
+            const auto f = fc.getResult();
+            if (f.getFullPathName().isNotEmpty())
+                audioProcessor.saveUserPresetToFile(f);
+        });
     }
     else if (button == &loadPreset)
     {
         auto dir = juce::File::getSpecialLocation(juce::File::userDocumentsDirectory).getChildFile("MixMaid Presets");
         dir.createDirectory();
-        juce::FileChooser chooser("Load MixMaid preset", dir, "*.mmix");
-        if (chooser.browseForFileToOpen())
-            audioProcessor.loadUserPresetFromFile(chooser.getResult());
+        fileChooser = std::make_unique<juce::FileChooser>("Load MixMaid preset", dir, "*.mmix");
+        const auto flags = juce::FileBrowserComponent::openMode
+                         | juce::FileBrowserComponent::canSelectFiles;
+        fileChooser->launchAsync(flags, [this](const juce::FileChooser& fc)
+        {
+            const auto f = fc.getResult();
+            if (f.existsAsFile())
+                audioProcessor.loadUserPresetFromFile(f);
+        });
     }
 }
 
