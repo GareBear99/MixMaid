@@ -4,11 +4,17 @@ project(MixMaid_AAAAAA_v9 VERSION 0.9.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/JUCE/CMakeLists.txt")
-    message(FATAL_ERROR "JUCE submodule/folder missing. Add JUCE at MixMaid_AAAAAA_v9/JUCE before configuring.")
+# JUCE locator: prefer an explicit JUCE_PATH / JUCE_DIR, fall back to a
+# sibling ./JUCE folder for local submodule layouts.
+if(DEFINED JUCE_PATH)
+    add_subdirectory("${JUCE_PATH}" JUCE)
+elseif(DEFINED JUCE_DIR)
+    add_subdirectory("${JUCE_DIR}" JUCE)
+elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/JUCE/CMakeLists.txt")
+    add_subdirectory(JUCE)
+else()
+    message(FATAL_ERROR "JUCE not found. Pass -DJUCE_PATH=/path/to/JUCE or place JUCE at MixMaid_v9/JUCE before configuring.")
 endif()
-
-add_subdirectory(JUCE)
 
 juce_add_plugin(MixMaid
     COMPANY_NAME "Gary Doman Audio"
